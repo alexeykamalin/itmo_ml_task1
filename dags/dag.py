@@ -1,9 +1,9 @@
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from .data.make_dataset import load_data, prepare_data
-from .models.predict_model import test_model
-from .models.train_model import train_model
+from data.make_dataset import load_data, prepare_data
+from models.predict_model import test_model
+from models.train_model import train_model
 
 
 
