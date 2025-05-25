@@ -1,10 +1,8 @@
 from datetime import datetime
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from data.make_dataset import load_data, prepare_data
-from models.predict_model import test_model
-from models.train_model import train_model
-
+from models.model1 import all_in_one
+from models.model2 import all_in_one_tree
 
 
 default_args = {
@@ -13,7 +11,7 @@ default_args = {
 }
 
 with DAG(
-    'iris_classification_pipeline',
+    'my_task',
     default_args=default_args,
     schedule_interval=None,
     catchup=False
@@ -21,22 +19,11 @@ with DAG(
 
     load_data_task = PythonOperator(
         task_id='load_data',
-        python_callable=load_data,
+        python_callable=all_in_one,
+    )
+    load_data_task_tree = PythonOperator(
+        task_id='load_data_tree',
+        python_callable=all_in_one_tree,
     )
 
-    prepare_data_task = PythonOperator(
-        task_id='prepare_data',
-        python_callable=prepare_data,
-    )
-
-    train_model_task = PythonOperator(
-        task_id='train_model',
-        python_callable=train_model,
-    )
-
-    test_model_task = PythonOperator(
-        task_id='test_model',
-        python_callable=test_model,
-    )
-
-    load_data_task >> prepare_data_task >> train_model_task >> test_model_task
+    load_data_task >> load_data_task_tree
