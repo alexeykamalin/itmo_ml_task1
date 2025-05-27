@@ -6,3 +6,5 @@ scikit-learn
 postgres
 joblib
 clearml
+wandb
+mlflow
