@@ -7,3 +7,4 @@ postgres
 joblib
 clearml
 wandb
+mlflow
